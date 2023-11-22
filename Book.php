@@ -91,4 +91,12 @@ class Book
         $csv_database = new CsvDatabase();
         $csv_database->delete($id);
     }
+
+    public function update_book($id ,$request)
+    {
+        $json_database = new JsonDatabase();
+        $json_database->update($id ,$request);
+        $csv_database = new CsvDatabase();
+        $csv_database->update($id,$request);
+    }
 }

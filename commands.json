@@ -1,4 +1,13 @@
 {
+  "5": {
+    "command_name": "Update",
+    "parameters": {
+      "type" : "authorName",
+      "value": "Aldous Orson",
+      "change_type" : "authorName",
+      "change_value": "Mr. Aldous Orson"
+    }
+  },
   "4": {
     "command_name": "Delete",
     "parameters": {

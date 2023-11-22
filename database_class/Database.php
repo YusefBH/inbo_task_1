@@ -7,4 +7,6 @@ interface Database
     public function add($book);
 
     public function delete($id);
+
+    public function update($id , $request);
 }

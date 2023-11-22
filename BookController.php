@@ -51,8 +51,6 @@ class BookController
 
         $book = new Book();
         $book = $book->add_books($request);
-
-        var_dump("inja add hast");
     }
 
     public function delete($request)
@@ -67,21 +65,30 @@ class BookController
             $books = $book->all_books(["sort" => null , "filter_by" => $request["type"] , "value" => $request["value"]]);
             if (!empty($books)) {
                 foreach ($books as $item) {
-                    var_dump($item["ISBN"]);
                     $book->remove_book($item["ISBN"]);
                 }
             }
         }
-
-
-
-        var_dump("inja delete hast");
     }
 
     public function Update($request)
     {
         $req = new UpdateRequest();
         $req->rules($request);
+
+        $book = new Book();
+        if($request["type"] == "ISBN"){
+            $book->update_book($request["value"] ,$request);
+        }else{
+            $books = $book->all_books(["sort" => null , "filter_by" => $request["type"] , "value" => $request["value"]]);
+            if (!empty($books)) {
+                foreach ($books as $item) {
+                    $book->update_book($item["ISBN"] , $request);
+                }
+            }
+        }
+
+
         var_dump("inja update hast");
     }
 }

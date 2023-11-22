@@ -76,4 +76,23 @@ class JsonDatabase implements Database
         fclose($fp);
 
     }
+
+    public function update($id , $request)
+    {
+
+        $books = json_decode(file_get_contents("database\books.json") , 1);
+
+
+        foreach ($books["books"] as $key => &$book) {
+            if($book["ISBN"] == $id)
+            {
+                $book[$request["change_type"]] = $request["change_value"];
+            }
+        }
+        $books = json_encode($books);
+
+        $fp = fopen("database\books.json", 'w');
+        fwrite($fp, $books);
+        fclose($fp);
+    }
 }
