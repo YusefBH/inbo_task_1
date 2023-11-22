@@ -65,4 +65,9 @@ class CsvDatabase implements Database
     {
         file_put_contents("database\books.csv", $book , FILE_APPEND | LOCK_EX);
     }
+
+    public function delete($id)
+    {
+        //todo: delete csv
+    }
 }

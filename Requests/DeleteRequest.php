@@ -5,9 +5,8 @@ class DeleteRequest
     public function rules($request)
     {
         $rules = [
-            "pre_page" => "require",
-            "page_number" => "require",
-            "id" => "require"
+            "type" =>"require",
+            "value" => "require"
         ];
 
         $val = new MyValidate( );

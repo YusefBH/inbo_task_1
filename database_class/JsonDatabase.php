@@ -50,4 +50,30 @@ class JsonDatabase implements Database
 
 
     }
+
+    public function delete($id)
+    {
+        $books = json_decode(file_get_contents("database\books.json") , 1);
+
+        foreach ($books["books"] as $key => $book) {
+            if($book["ISBN"] == $id)
+            {
+                $delete_books = json_decode(file_get_contents("database\deleted_books.json") , 1);
+                $delete_books["books"][] = $book;
+                $delete_books = json_encode($delete_books);
+                $fp = fopen("database\deleted_books.json", 'w');
+                fwrite($fp, $delete_books);
+                fclose($fp);
+
+                unset($books["books"][$key]);
+            }
+
+        }
+        $books = json_encode($books);
+
+        $fp = fopen("database\books.json", 'w');
+        fwrite($fp, $books);
+        fclose($fp);
+
+    }
 }

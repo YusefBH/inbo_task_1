@@ -84,4 +84,11 @@ class Book
             $csv_database->add($request["books"]);
         }
     }
+
+    public function remove_book($id){
+        $json_database = new JsonDatabase();
+        $json_database->delete($id);
+        $csv_database = new CsvDatabase();
+        $csv_database->delete($id);
+    }
 }

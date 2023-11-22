@@ -59,6 +59,22 @@ class BookController
     {
         $req = new DeleteRequest();
         $req->rules($request);
+
+        $book = new Book();
+        if($request["type"] == "ISBN"){
+            $book->remove_book($request["value"]);
+        }else{
+            $books = $book->all_books(["sort" => null , "filter_by" => $request["type"] , "value" => $request["value"]]);
+            if (!empty($books)) {
+                foreach ($books as $item) {
+                    var_dump($item["ISBN"]);
+                    $book->remove_book($item["ISBN"]);
+                }
+            }
+        }
+
+
+
         var_dump("inja delete hast");
     }
 

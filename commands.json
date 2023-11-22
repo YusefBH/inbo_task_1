@@ -1,4 +1,11 @@
 {
+  "4": {
+    "command_name": "Delete",
+    "parameters": {
+      "type" : "authorName",
+      "value": "Aldous Orson"
+    }
+  },
   "2": {
     "command_name": "Add",
     "parameters": {
@@ -46,11 +53,9 @@
   },
   "10": {
     "command_name": "Delete",
-    "parameters": [
-      "pre_page",
-      "page_number",
-      "id"
-    ]
+    "parameters": {
+      "id": "978-1451635626"
+    }
   },
   "11": {
     "command_name": "Update",
