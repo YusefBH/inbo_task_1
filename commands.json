@@ -1,0 +1,36 @@
+{
+  "0": {
+    "command_name": "List",
+    "parameters": {
+      "pre_page": 3,
+      "page_number": 1,
+      "sort": "asc",
+      "filter_by" : null,
+      "value" : ""
+    }
+  },
+  "1": {
+    "command_name": "Show",
+    "parameters": [
+      "pre_page",
+      "page_number",
+      "id"
+    ]
+  },
+  "2": {
+    "command_name": "Delete",
+    "parameters": [
+      "pre_page",
+      "page_number",
+      "id"
+    ]
+  },
+  "3": {
+    "command_name": "Update",
+    "parameters": [
+      "pre_page",
+      "page_number",
+      "id"
+    ]
+  }
+}
