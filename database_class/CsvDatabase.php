@@ -61,4 +61,8 @@ class CsvDatabase implements Database
         return $array;
     }
 
+    public function add($book)
+    {
+        file_put_contents("database\books.csv", $book , FILE_APPEND | LOCK_EX);
+    }
 }

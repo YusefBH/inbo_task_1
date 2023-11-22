@@ -2,6 +2,7 @@
 
 require_once("Requests\ListRequest.php");
 require_once("Requests\ShowRequest.php");
+require_once("Requests\AddRequest.php");
 require_once("Requests\DeleteRequest.php");
 require_once("Requests\UpdateRequest.php");
 require_once ("Book.php");
@@ -23,8 +24,6 @@ class BookController
         echo "<pre>";
         print_r($x);
         echo "</pre>";
-
-
     }
 
 
@@ -43,6 +42,17 @@ class BookController
         }else{
             echo "404 error book dose not exist";
         }
+    }
+
+    public function add($request)
+    {
+        $req = new AddRequest();
+        $req->rules($request);
+
+        $book = new Book();
+        $book = $book->add_books($request);
+
+        var_dump("inja add hast");
     }
 
     public function delete($request)

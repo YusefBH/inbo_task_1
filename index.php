@@ -18,6 +18,11 @@ foreach ($commands as $command) {
                 $show->show($command["parameters"]);
                 break;
 
+            case "Add" :
+                $list = new BookController();
+                $list->add($command["parameters"]);
+                break;
+
             case "Delete" :
                 $delete = new BookController();
                 $delete->delete($command["parameters"]);

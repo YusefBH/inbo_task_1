@@ -50,13 +50,11 @@ class Book
             else
                 return 0;
         }
-
         if($sort_type == "asc"){
             usort($books , "compareByTimeStamp1");
         }else{
             usort($books , "compareByTimeStamp2");
         }
-
 
        return $books;
     }
@@ -69,9 +67,21 @@ class Book
                 return $book;
             }
         }
-
         return null;
-
     }
 
+    public function add_books($request)
+    {
+        if($request["type"] == "json"){
+            //todo: validate books
+            foreach ($request["books"] as $book) {
+                $json_database = new JsonDatabase();
+                $json_database->add($book);
+            }
+        }else{
+            //todo: validate books
+            $csv_database = new CsvDatabase();
+            $csv_database->add($request["books"]);
+        }
+    }
 }

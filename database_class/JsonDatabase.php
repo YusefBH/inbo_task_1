@@ -37,4 +37,17 @@ class JsonDatabase implements Database
         }
        return $books;
     }
+
+    public function add($book)
+    {
+        $books = json_decode(file_get_contents("database\books.json") , 1);
+        $books["books"][] = $book;
+        $books = json_encode($books);
+
+        $fp = fopen("database\books.json", 'w');
+        fwrite($fp, $books);
+        fclose($fp);
+
+
+    }
 }
