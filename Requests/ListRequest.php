@@ -11,7 +11,7 @@ class ListRequest
             "pre_page" => "require",
             "page_number" => "require",
             "sort" => "require",
-            "filter_by"=> "require",
+            "filter_by"=> "",
             "value"=> "require"
         ];
 

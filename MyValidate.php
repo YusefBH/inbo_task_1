@@ -17,6 +17,7 @@ class MyValidate
                     echo "<br>";
                     var_dump($key. " is null !!!!!!!!!!!!");
                     echo "<br>";
+                    exit();
                 }
             }
         }

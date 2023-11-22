@@ -20,12 +20,11 @@ class BookController
 
         $paginate = new Pagination($request["pre_page"] );
         $x = $paginate->paginate($books , $request["page_number"]);
-
         echo "<pre>";
         print_r($x);
         echo "</pre>";
 
-//        var_dump("inja list hast");
+
     }
 
 
@@ -33,7 +32,17 @@ class BookController
     {
         $req = new ShowRequest();
         $req->rules($request);
-        var_dump("inja show hast");
+
+        $book = new Book();
+
+        $book = $book->specific_book($request["id"]);
+        if($book) {
+            echo "<pre>";
+            print_r($book);
+            echo "</pre>";
+        }else{
+            echo "404 error book dose not exist";
+        }
     }
 
     public function delete($request)

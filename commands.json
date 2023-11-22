@@ -1,21 +1,19 @@
 {
+  "1": {
+    "command_name": "Show",
+    "parameters": {
+      "id" : "978-1451635626"
+    }
+  },
   "0": {
     "command_name": "List",
     "parameters": {
-      "pre_page": 3,
-      "page_number": 1,
+      "pre_page": 2,
+      "page_number": 0,
       "sort": "asc",
       "filter_by" : null,
       "value" : ""
     }
-  },
-  "1": {
-    "command_name": "Show",
-    "parameters": [
-      "pre_page",
-      "page_number",
-      "id"
-    ]
   },
   "2": {
     "command_name": "Delete",

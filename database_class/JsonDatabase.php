@@ -4,7 +4,7 @@ require_once "database_class\Database.php";
 class JsonDatabase implements Database
 {
 
-    public function read($filter_by , $value)
+    public function read($filter_by=null , $value=null)
     {
         if(is_null($filter_by))
         {
@@ -18,6 +18,22 @@ class JsonDatabase implements Database
                if($book[$filter_by] == $value)
                    $books[] = $book;
             }
+        }
+
+
+        foreach ($books as &$book) {
+            $d = DateTime::createFromFormat(
+                'Y-m-d',
+                 $book["publishDate"]
+            );
+
+            if ($d === false) {
+                die("Incorrect date string");
+            } else {
+                $timestamp =  $d->getTimestamp();
+            }
+            $book["publishDate"] = date('y-m-d h:i:s', $timestamp);
+
         }
        return $books;
     }

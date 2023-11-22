@@ -7,6 +7,17 @@ require_once "database_class\CsvDatabase.php";
 class Book
 {
 
+    private function books(){
+        $json_database = new JsonDatabase();
+        $temp1 = $json_database->read();
+
+        $csv_database = new CsvDatabase();
+        $temp2 = $csv_database->read();
+        $books = array_merge($temp1 , $temp2);
+
+        return $books;
+    }
+
     public function all_books($request)
     {
 
@@ -50,8 +61,16 @@ class Book
        return $books;
     }
 
-    public function filter_books()
+    public function specific_book($id)
     {
+        foreach ($this->books() as $book) {
+            if($book['ISBN'] == $id)
+            {
+                return $book;
+            }
+        }
+
+        return null;
 
     }
 

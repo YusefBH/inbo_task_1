@@ -4,7 +4,7 @@ require_once "database_class\Database.php";
 class CsvDatabase implements Database
 {
 
-    public function read($filter_by , $value)
+    public function read($filter_by =null , $value=null)
     {
         $array = [];
         if(is_null($filter_by))
@@ -44,7 +44,20 @@ class CsvDatabase implements Database
             }
         }
 
+        foreach ($array as &$book) {
+            $d = DateTime::createFromFormat(
+                'Y-m-d',
+                $book["publishDate"]
+            );
 
+            if ($d === false) {
+                die("Incorrect date string");
+            } else {
+                $timestamp =  $d->getTimestamp();
+            }
+            $book["publishDate"] = date('y-m-d h:i:s', $timestamp);
+
+        }
         return $array;
     }
 
