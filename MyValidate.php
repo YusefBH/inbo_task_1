@@ -8,6 +8,7 @@ class MyValidate
 
             if($rule == "require")
             {
+
                 if(!key_exists($key , $request)){
                     var_dump($key." is Undefined !!!");
                     exit();

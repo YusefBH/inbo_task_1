@@ -35,12 +35,20 @@ class JsonDatabase implements Database
             $book["publishDate"] = date('y-m-d h:i:s', $timestamp);
 
         }
+
        return $books;
     }
 
     public function add($book)
     {
         $books = json_decode(file_get_contents("database\books.json") , 1);
+        foreach ($books["books"] as $item) {
+            if($item["ISBN"] == $book["ISBN"])
+            {
+                var_dump("this book exist !!!!!!!!!!!!!!!");
+                exit();
+            }
+        }
         $books["books"][] = $book;
         $books = json_encode($books);
 

@@ -11,10 +11,6 @@ class Pagination
 
     public function paginate($books , $page_number)
     {
-
-
-
-
         $i =0 ;
         $temp_array = [];
         $flag =1;
@@ -29,13 +25,8 @@ class Pagination
             }
         }
 
-        if($flag)
-        {
-            $this->paginated[] = $temp_array;
-        }
-
-        if(count($this->paginated)<=$page_number)
-            return null;
+        if($flag) $this->paginated[] = $temp_array;
+        if(count($this->paginated)<=$page_number) return null;
 
         return $this->paginated[$page_number];
     }

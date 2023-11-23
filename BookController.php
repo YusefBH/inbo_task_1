@@ -26,7 +26,6 @@ class BookController
         echo "</pre>";
     }
 
-
     public function show($request)
     {
         $req = new ShowRequest();
@@ -55,6 +54,7 @@ class BookController
 
     public function delete($request)
     {
+
         $req = new DeleteRequest();
         $req->rules($request);
 
@@ -62,7 +62,9 @@ class BookController
         if($request["type"] == "ISBN"){
             $book->remove_book($request["value"]);
         }else{
+
             $books = $book->all_books(["sort" => null , "filter_by" => $request["type"] , "value" => $request["value"]]);
+
             if (!empty($books)) {
                 foreach ($books as $item) {
                     $book->remove_book($item["ISBN"]);
