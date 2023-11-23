@@ -15,13 +15,11 @@ class Book
         $csv_database = new CsvDatabase();
         $temp2 = $csv_database->read();
         $books = array_merge($temp1, $temp2);
-
         return $books;
     }
 
     public function all_books($request)
     {
-
         $sort_type = $request["sort"];
         $filter_by = $request["filter_by"];
         $value = $request["value"];
@@ -34,7 +32,7 @@ class Book
 
         $books = array_merge($temp1, $temp2);
 
-        function compareByTimeStamp2($time1, $time2)
+        function desc($time1, $time2)
         {
             if (strtotime($time1["publishDate"]) < strtotime($time2["publishDate"]))
                 return 1;
@@ -44,7 +42,7 @@ class Book
                 return 0;
         }
 
-        function compareByTimeStamp1($time1, $time2)
+        function asc($time1, $time2)
         {
             if (strtotime($time1["publishDate"]) < strtotime($time2["publishDate"]))
                 return -1;
@@ -55,9 +53,9 @@ class Book
         }
 
         if ($sort_type == "asc") {
-            usort($books, "compareByTimeStamp1");
+            usort($books, "asc");
         } else {
-            usort($books, "compareByTimeStamp2");
+            usort($books, "desc");
         }
 
         return $books;
@@ -75,52 +73,12 @@ class Book
 
     public function add_books($request)
     {
+        foreach ($request["books"] as $book) {
+            $json_database = new JsonDatabase();
+            $json_database->add($book);
 
-        $rules = [
-            "ISBN" => "require",
-            "bookTitle" => "require",
-            "authorName" => "require",
-            "pagesCount" => "require",
-            "publishDate" => "require"
-        ];
-
-
-
-        if ($request["type"] == "json") {
-
-            foreach ($request["books"] as $item) {
-                $val = new MyValidate();// TODO : delete this
-                $val($item, $rules);
-            }
-
-            foreach ($request["books"] as $book) {
-                $json_database = new JsonDatabase();
-                $json_database->add($book);
-            }
-        } else {
-
-
-            $handle = fopen("database\books.csv", "r");
-            if ($handle)
-                $line = fgets($handle);
-            $key_array = explode(",", $line);
-            array_pop($key_array);
-            fclose($handle);
-
-            $value = explode("\n", $request["books"]);
-            array_pop($value);
-            foreach ($value as $item) {
-                $vall = explode("," , $item);
-                array_pop($vall);
-                $array = array_combine($key_array, $vall);
-                $val = new MyValidate();// TODO : delete this
-                $val($array , $rules);
-
-                $csv_database = new CsvDatabase();
-                $csv_database->add($item);
-            }
-
-
+            $csv_database = new CsvDatabase();
+            $csv_database->add($book);
         }
     }
 

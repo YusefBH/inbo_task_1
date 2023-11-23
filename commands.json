@@ -1,36 +1,24 @@
 {
-
-  "50": {
-    "command_name": "List",
-    "parameters": {
-
-      "page_number": 0,
-      "sort": "asc",
-      "filter_by" : null,
-      "value" : ""
-    }
-  },
   "2": {
     "command_name": "Add",
     "parameters": {
-      "type" : "csv",
-      "books": "978-1412088956,a program ,yusef basiri ,200,2020-02-18,\n978-1453213315,inbo info,yusef basiri,150,2024-10-23,\n"
-    }
-  },
-  "5": {
-    "command_name": "Update",
-    "parameters": {
-      "type" : "authorName",
-      "value": "Aldous Orson",
-      "change_type" : "authorName",
-      "change_value": "Mr. Aldous Orson"
-    }
-  },
-  "4": {
-    "command_name": "Delete",
-    "parameters": {
-      "type" : "authorName",
-      "value": "Aldous Orson"
+      "type": "csv",
+      "books": [
+        {
+          "ISBN": "978-1412088956",
+          "bookTitle": "a program 2",
+          "authorName": "yusef basiri",
+          "pagesCount": 520,
+          "publishDate": "2021-09-21"
+        },
+        {
+          "ISBN": "978-1453213315",
+          "bookTitle": "inbo info 2",
+          "authorName": "yusef basiri",
+          "pagesCount": 140,
+          "publishDate": "2023-03-17"
+        }
+      ]
     }
   },
   "3": {
@@ -55,10 +43,36 @@
       ]
     }
   },
+  "50": {
+    "command_name": "List",
+    "parameters": {
+      "pre_page": 2,
+      "page_number": 0,
+      "sort": "asc",
+      "filter_by" : null,
+      "value" : ""
+    }
+  },
+  "5": {
+    "command_name": "Update",
+    "parameters": {
+      "type" : "authorName",
+      "value": "Aldous Orson",
+      "change_type" : "authorName",
+      "change_value": "Mr. Aldous Orson"
+    }
+  },
   "1": {
     "command_name": "Show",
     "parameters": {
       "id" : "978-1451635626"
+    }
+  },
+  "4": {
+    "command_name": "Delete",
+    "parameters": {
+      "type" : "authorName",
+      "value": "Aldous Orson"
     }
   },
   "0": {

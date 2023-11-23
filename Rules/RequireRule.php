@@ -11,4 +11,5 @@ class RequireRule implements Rule
             new RequireException($key . " : This field is require");
         }
     }
+
 }

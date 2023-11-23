@@ -1,50 +1,37 @@
 <?php
 
 require_once "database_class\Database.php";
+require_once("Exceptions\BookExistRuleException.php");
+
 class CsvDatabase implements Database
 {
 
-    public function read($filter_by =null , $val=null)
+    public function read($filter_by = null, $val = null)
     {
         $array = [];
 
-        if(is_null($filter_by))
-        {
-            $handle = fopen("database\books.csv", "r");
-            if($handle){
-                $line = fgets($handle);
-            }
-            $key_array = explode("," , $line);
-            array_pop($key_array);
-            if ($handle) {
-                $i = 0;
-                while (($line = fgets($handle)) !== false and ++$i>0) {
-                    $value = explode("," , $line);
-                    array_pop($value);
-                    $array[] = array_combine($key_array , $value);
-                }
-                fclose($handle);
-            }
-        }else{
-            $handle = fopen("database\books.csv", "r");
-            if($handle){
-                $line = fgets($handle);
-            }
-            $key_array = explode("," , $line);
-            array_pop($key_array);
-            if ($handle) {
-                $i = 0;
-                while (($line = fgets($handle)) !== false and ++$i>0) {
-                    $value = explode("," , $line);
-                    array_pop($value);
-                    $x =  array_combine($key_array , $value);
+        $handle = fopen("database\books.csv", "r");
+        if ($handle) {
+            $line = fgets($handle);
+        }
+        $key_array = explode(",", $line);
+        array_pop($key_array);
+        if ($handle) {
+            $i = 0;
+            while (($line = fgets($handle)) !== false and ++$i > 0) {
+                $value = explode(",", $line);
+                array_pop($value);
+                if (is_null($filter_by)) {
+                    $array[] = array_combine($key_array, $value);
+                } else {
+                    $x = array_combine($key_array, $value);
 
-                    if($x[$filter_by] == $val) {
+                    if ($x[$filter_by] == $val) {
                         $array[] = $x;
                     }
                 }
-                fclose($handle);
             }
+            fclose($handle);
         }
 
         foreach ($array as &$book) {
@@ -56,7 +43,7 @@ class CsvDatabase implements Database
             if ($d === false) {
                 die("Incorrect date string");
             } else {
-                $timestamp =  $d->getTimestamp();
+                $timestamp = $d->getTimestamp();
             }
             $book["publishDate"] = date('y-m-d h:i:s', $timestamp);
 
@@ -67,20 +54,12 @@ class CsvDatabase implements Database
 
     public function add($book)
     {
-
-        var_dump($book);
         $handle = fopen("database\books.csv", "r");
-
-        if ($handle) {
+        if ($handle)
             $line = fgets($handle);
-        }
 
         $key_array = explode(",", $line);
         array_pop($key_array);
-
-        $mybook = explode("," ,$book);
-        array_pop($mybook);
-        $mybook = array_combine($key_array , $mybook);
 
         if ($handle) {
             $i = 0;
@@ -88,30 +67,24 @@ class CsvDatabase implements Database
                 $value = explode(",", $line);
                 array_pop($value);
 
-                var_dump(count($key_array) , count($value));
                 $array = array_combine($key_array, $value);
 
-                if($array["ISBN"] == $mybook["ISBN"]){
-                    var_dump("this book exist !!!!!!!!!!!!!!!");
-                    exit();
-                }
+                if ($array["ISBN"] == $book["ISBN"])
+                    new BookExistRuleException("this book exist !");
             }
             fclose($handle);
         }
-
-        file_put_contents("database\books.csv", $book.PHP_EOL , FILE_APPEND | LOCK_EX);
+        $book = implode(",", $book) . ",";
+        file_put_contents("database\books.csv", $book . PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 
     public function delete($id)
     {
         $handle = fopen("database\books.csv", "r");
-
         $contents = file_get_contents("database\books.csv");
 
-
-        if ($handle) {
+        if ($handle)
             $line = fgets($handle);
-        }
 
         $key_array = explode(",", $line);
         array_pop($key_array);
@@ -121,26 +94,21 @@ class CsvDatabase implements Database
                 $value = explode(",", $line);
                 array_pop($value);
                 $array = array_combine($key_array, $value);
-                if($array["ISBN"] == $id){
+                if ($array["ISBN"] == $id)
                     $contents = str_replace($line, '', $contents);
-
-                }
             }
             fclose($handle);
         }
         file_put_contents("database\books.csv", $contents);
     }
 
-    public function update($id , $request )
+    public function update($id, $request)
     {
         $handle = fopen("database\books.csv", "r");
-
         $contents = file_get_contents("database\books.csv");
 
-
-        if ($handle) {
+        if ($handle)
             $line = fgets($handle);
-        }
 
         $key_array = explode(",", $line);
         array_pop($key_array);
@@ -150,14 +118,13 @@ class CsvDatabase implements Database
                 $value = explode(",", $line);
                 array_pop($value);
                 $array = array_combine($key_array, $value);
-                if($array["ISBN"] == $id){
+                if ($array["ISBN"] == $id) {
                     $array[$request["change_type"]] = $request["change_value"];
-                    $contents = str_replace($line, implode("," , $array)."\n", $contents);
+                    $contents = str_replace($line, implode(",", $array) . "\n", $contents);
                 }
             }
             fclose($handle);
         }
         file_put_contents("database\books.csv", $contents);
-
     }
 }

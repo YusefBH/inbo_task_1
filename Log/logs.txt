@@ -1,2 +1,12 @@
 in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> pre_page : This field is require
 in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> pre_page : This field is require
+in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> pre_page : This field is require
+in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> ISBN : This field is require
+in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> ISBN : This field is require
+in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> ISBN : This field is require
+in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> ISBN : This field is require
+in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> ISBN : This field is require
+in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> ISBN : This field is require
+in file : C:\xampp\htdocs\inbo_task_1\database_class\CsvDatabase.php on line 92 =>> this book exist !
+in file : C:\xampp\htdocs\inbo_task_1\database_class\CsvDatabase.php on line 91 =>> this book exist !
+in file : C:\xampp\htdocs\inbo_task_1\database_class\CsvDatabase.php on line 89 =>> this book exist !

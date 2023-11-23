@@ -1,5 +1,6 @@
 <?php
 require_once "database_class\Database.php";
+require_once ("Exceptions\BookExistRuleException.php");
 
 class JsonDatabase implements Database
 {
@@ -20,7 +21,6 @@ class JsonDatabase implements Database
             }
         }
 
-
         foreach ($books as &$book) {
             $d = DateTime::createFromFormat(
                 'Y-m-d',
@@ -32,8 +32,8 @@ class JsonDatabase implements Database
             } else {
                 $timestamp =  $d->getTimestamp();
             }
-            $book["publishDate"] = date('y-m-d h:i:s', $timestamp);
 
+            $book["publishDate"] = $timestamp;
         }
 
        return $books;
@@ -42,21 +42,18 @@ class JsonDatabase implements Database
     public function add($book)
     {
         $books = json_decode(file_get_contents("database\books.json") , 1);
+
         foreach ($books["books"] as $item) {
             if($item["ISBN"] == $book["ISBN"])
-            {
-                var_dump("this book exist !!!!!!!!!!!!!!!");
-                exit();
-            }
+                new BookExistRuleException("this book exist !");
         }
+
         $books["books"][] = $book;
         $books = json_encode($books);
 
         $fp = fopen("database\books.json", 'w');
         fwrite($fp, $books);
         fclose($fp);
-
-
     }
 
     public function delete($id)
@@ -66,6 +63,7 @@ class JsonDatabase implements Database
         foreach ($books["books"] as $key => $book) {
             if($book["ISBN"] == $id)
             {
+
                 $delete_books = json_decode(file_get_contents("database\deleted_books.json") , 1);
                 $delete_books["books"][] = $book;
                 $delete_books = json_encode($delete_books);
@@ -87,10 +85,7 @@ class JsonDatabase implements Database
 
     public function update($id , $request)
     {
-
         $books = json_decode(file_get_contents("database\books.json") , 1);
-
-
         foreach ($books["books"] as $key => &$book) {
             if($book["ISBN"] == $id)
             {
@@ -98,7 +93,6 @@ class JsonDatabase implements Database
             }
         }
         $books = json_encode($books);
-
         $fp = fopen("database\books.json", 'w');
         fwrite($fp, $books);
         fclose($fp);

@@ -3,9 +3,10 @@
 require_once("Requests\ListRequest.php");
 require_once("Requests\ShowRequest.php");
 require_once("Requests\AddRequest.php");
+require_once("Requests\AddEachRequest.php");
 require_once("Requests\DeleteRequest.php");
 require_once("Requests\UpdateRequest.php");
-require_once ("Book.php");
+require_once("Book.php");
 require_once("Pagination.php");
 
 class BookController
@@ -19,8 +20,8 @@ class BookController
 
         $books = $books->all_books($request);
 
-        $paginate = new Pagination($request["pre_page"] );
-        $x = $paginate->paginate($books , $request["page_number"]);
+        $paginate = new Pagination($request["pre_page"]);
+        $x = $paginate->paginate($books, $request["page_number"]);
         echo "<pre>";
         print_r($x);
         echo "</pre>";
@@ -34,11 +35,11 @@ class BookController
         $book = new Book();
 
         $book = $book->specific_book($request["id"]);
-        if($book) {
+        if ($book) {
             echo "<pre>";
             print_r($book);
             echo "</pre>";
-        }else{
+        } else {
             echo "404 error book dose not exist";
         }
     }
@@ -48,22 +49,28 @@ class BookController
         $req = new AddRequest($request);
         $req->rules($request);
 
+        foreach ($request["books"] as $item) {
+            foreach ($request["books"] as $book) {
+                $val = new AddEachRequest($book);
+                $val->rules($book);
+            }
+        }
+
         $book = new Book();
-        $book = $book->add_books($request);
+        $book->add_books($request);
     }
 
     public function delete($request)
     {
-
         $req = new DeleteRequest($request);
         $req->rules($request);
 
         $book = new Book();
-        if($request["type"] == "ISBN"){
+        if ($request["type"] == "ISBN") {
             $book->remove_book($request["value"]);
-        }else{
+        } else {
 
-            $books = $book->all_books(["sort" => null , "filter_by" => $request["type"] , "value" => $request["value"]]);
+            $books = $book->all_books(["sort" => null, "filter_by" => $request["type"], "value" => $request["value"]]);
 
             if (!empty($books)) {
                 foreach ($books as $item) {
@@ -79,18 +86,15 @@ class BookController
         $req->rules($request);
 
         $book = new Book();
-        if($request["type"] == "ISBN"){
-            $book->update_book($request["value"] ,$request);
-        }else{
-            $books = $book->all_books(["sort" => null , "filter_by" => $request["type"] , "value" => $request["value"]]);
+        if ($request["type"] == "ISBN") {
+            $book->update_book($request["value"], $request);
+        } else {
+            $books = $book->all_books(["sort" => null, "filter_by" => $request["type"], "value" => $request["value"]]);
             if (!empty($books)) {
                 foreach ($books as $item) {
-                    $book->update_book($item["ISBN"] , $request);
+                    $book->update_book($item["ISBN"], $request);
                 }
             }
         }
-
-
-        var_dump("inja update hast");
     }
 }
