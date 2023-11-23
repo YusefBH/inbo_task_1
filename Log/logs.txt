@@ -1,0 +1,2 @@
+in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> pre_page : This field is require
+in file : C:\xampp\htdocs\inbo_task_1\Rules\RequireRule.php on line 11 =>> pre_page : This field is require

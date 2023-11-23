@@ -12,7 +12,7 @@ class BookController
 {
     public function list_($request)
     {
-        $req = new ListRequest();
+        $req = new ListRequest($request);
         $req->rules($request);
 
         $books = new Book();
@@ -28,7 +28,7 @@ class BookController
 
     public function show($request)
     {
-        $req = new ShowRequest();
+        $req = new ShowRequest($request);
         $req->rules($request);
 
         $book = new Book();
@@ -45,7 +45,7 @@ class BookController
 
     public function add($request)
     {
-        $req = new AddRequest();
+        $req = new AddRequest($request);
         $req->rules($request);
 
         $book = new Book();
@@ -55,7 +55,7 @@ class BookController
     public function delete($request)
     {
 
-        $req = new DeleteRequest();
+        $req = new DeleteRequest($request);
         $req->rules($request);
 
         $book = new Book();
@@ -75,7 +75,7 @@ class BookController
 
     public function Update($request)
     {
-        $req = new UpdateRequest();
+        $req = new UpdateRequest($request);
         $req->rules($request);
 
         $book = new Book();

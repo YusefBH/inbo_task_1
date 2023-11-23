@@ -1,6 +1,6 @@
 <?php
 
-require_once "my_databases.php";
+
 require_once "database_class\JsonDatabase.php";
 require_once "database_class\CsvDatabase.php";
 
@@ -89,7 +89,7 @@ class Book
         if ($request["type"] == "json") {
 
             foreach ($request["books"] as $item) {
-                $val = new MyValidate();
+                $val = new MyValidate();// TODO : delete this
                 $val($item, $rules);
             }
 
@@ -113,7 +113,7 @@ class Book
                 $vall = explode("," , $item);
                 array_pop($vall);
                 $array = array_combine($key_array, $vall);
-                $val = new MyValidate();
+                $val = new MyValidate();// TODO : delete this
                 $val($array , $rules);
 
                 $csv_database = new CsvDatabase();

@@ -1,21 +1,29 @@
 <?php
 
-require_once("MyValidate.php");
+require_once("Requests\Request.php");
+require_once("Rules\RequireRule.php");
+require_once("Rules\IntegerRule.php");
+require_once("Rules\DatatypeRule.php");
 
-class ListRequest
+
+class ListRequest extends Request
 {
 
-    public function rules($request)
+    public function __construct($params)
+    {
+        parent::__construct($params);
+    }
+
+    public function rules()
     {
         $rules = [
-            "pre_page" => "require",
-            "page_number" => "require",
-            "sort" => "require",
-            "filter_by"=> "",
-            "value"=> "require"
+            "pre_page" => [new RequireRule() , new IntegerRule()],
+            "page_number" => [new RequireRule() , new IntegerRule()],
+            "sort" => [new RequireRule()],
+            "filter_by"=> [],
+            "value"=> []
         ];
 
-        $val = new MyValidate( );
-        $val($request ,$rules);
+        $this->validate($rules);
     }
 }
