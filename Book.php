@@ -73,12 +73,16 @@ class Book
 
     public function add_books($request)
     {
-        foreach ($request["books"] as $book) {
-            $json_database = new JsonDatabase();
-            $json_database->add($book);
-
-            $csv_database = new CsvDatabase();
-            $csv_database->add($book);
+        if($request["type"] === "json") {
+            foreach ($request["books"] as $book) {
+                $json_database = new JsonDatabase();
+                $json_database->add($book);
+            }
+        }else{
+            foreach ($request["books"] as $book) {
+                $csv_database = new CsvDatabase();
+                $csv_database->add($book);
+            }
         }
     }
 

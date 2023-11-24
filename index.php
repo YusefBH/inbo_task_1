@@ -5,6 +5,8 @@ require_once("BookController.php");
 $commands = json_decode( file_get_contents("commands.json"), 1);
 
 
+
+
 foreach ($commands as $command) {
         switch ($command["command_name"])
         {
