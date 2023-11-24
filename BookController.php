@@ -8,7 +8,9 @@ require_once("Requests\DeleteRequest.php");
 require_once("Requests\UpdateRequest.php");
 require_once("Book.php");
 require_once("Pagination.php");
-
+require_once("Views\View.php");
+require_once("Views\ShowView.php");
+require_once("Views\ListView.php");
 class BookController
 {
     public function list_($request)
@@ -22,6 +24,10 @@ class BookController
 
         $paginate = new Pagination($request["pre_page"]);
         $x = $paginate->paginate($books, $request["page_number"]);
+
+        $view = new View();
+        $view(new ListView() , $x);
+
         echo "<pre>";
         print_r($x);
         echo "</pre>";
@@ -36,9 +42,9 @@ class BookController
 
         $book = $book->specific_book($request["id"]);
         if ($book) {
-            echo "<pre>";
-            print_r($book);
-            echo "</pre>";
+
+            $view = new View();
+            $view(new ShowView() , $book);
         } else {
             echo "404 error book dose not exist";
         }
